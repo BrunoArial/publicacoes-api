@@ -5,19 +5,22 @@ import java.util.List;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity; 
 
 import com.brunoarial.publicacoes.domain.User;
+import com.brunoarial.publicacoes.services.UserService;
 
 @RestController 
 @RequestMapping (value="/users")
 public class UserResource {
+
+    @Autowired 
+    private UserService userService;
     
     @RequestMapping (method=RequestMethod.GET)
     public ResponseEntity<List<User>> findAll() {
-        User u1 = new User("1", "Bruno", "brunoarial@gmail.com");
-        User u2 = new User("2", "Maria", "maria@gmail.com");
-        List<User> list = List.of(u1, u2);
+        List<User> list = userService.findAll();
         return ResponseEntity.ok().body(list);
     }
 }
